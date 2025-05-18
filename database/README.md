@@ -1,198 +1,69 @@
-# PostgreSQL Context Server MCP 设置指南
+# 数据库文档
 
-## 概述
+## 数据库信息
 
-本指南详细介绍了如何为License管理系统设置和配置PostgreSQL Context Server MCP（多控制平面）。该服务器用于存储和管理项目的上下文信息，使应用程序能够访问和利用结构化的项目数据。
+### 连接信息
+- **数据库名称**: license_management
+- **用户名**: license_admin
+- **密码**: license123
+- **主机**: localhost
+- **端口**: 5432 (PostgreSQL默认端口)
 
-## 数据库架构
+## 数据库表结构
+
+### 用户表（users）
+| 字段名称 | 类型 | 描述 | 约束 |
+|---------|------|------|------|
+| id | integer | 用户ID | 主键，自动递增 |
+| username | varchar(255) | 用户名 | 可空 |
+| password | varchar(255) | 密码 | 非空 |
+| email | varchar(255) | 电子邮箱 | 非空，唯一 |
+| company_name | varchar(255) | 公司名称 | 非空 |
+| contact_name | varchar(255) | 联系人姓名 | 非空 |
+| phone | varchar(50) | 手机号码 | 可空 |
+| is_active | boolean | 是否激活 | 默认 true |
+| role | varchar(20) | 用户角色 | 默认'usr'，可选'admin' |
+| created_at | timestamp with time zone | 创建时间 | 默认当前时间 |
+| updated_at | timestamp with time zone | 更新时间 | 默认当前时间 |
+
+### 证书表（licenses）
+| 字段名称 | 类型 | 描述 | 约束 |
+|---------|------|------|------|
+| id | integer | 证书ID | 主键，自动递增 |
+| applicant_name | varchar(100) | 申请人姓名 | 非空 |
+| applicant_email | varchar(100) | 申请人邮箱 | 非空 |
+| applicant_phone | varchar(20) | 申请人手机 | 可空 |
+| company_name | varchar(100) | 客户公司名称 | 可空 |
+| license_type | varchar(20) | 证书类型 | 非空 |
+| mac_address | varchar(50) | 服务器MAC地址 | 非空 |
+| application_reason | text | 申请说明 | 可空 |
+| license_key | text | 生成的密钥 | 可空 |
+| status | varchar(20) | 状态 | 默认'pending' |
+| created_at | timestamp | 创建时间 | 默认当前时间 |
+| expiry_date | timestamp | 过期时间 | 可空 |
+
+## 数据库架构文件
 
 项目使用以下架构文件：
 
-- `context_schema.sql`：上下文存储架构
 - `postgres_schema.sql`：主要应用程序数据架构
+- 其他迁移文件：位于 `migrations/` 目录下
 
-## MCP扩展
+## 数据库视图
 
-为了支持高级上下文功能，我们使用以下PostgreSQL扩展：
+1. **pending_license_reviews** - 待审核证书视图
+2. **license_reviews** - 证书审核详情视图
 
-- `pgcrypto`：用于敏感数据加密
-- `uuid-ossp`：用于生成唯一标识符
-- `pg_trgm`：用于高效文本搜索
-- `vector`（可选）：用于向量搜索和相似性匹配
+## 超级管理员账户
 
-## 安装步骤
+- **用户名**: admin
+- **密码**: admin123
+- **邮箱**: admin@example.com
 
-### 1. 安装PostgreSQL
+## 数据库审核流程
 
-确保已安装PostgreSQL 14或更高版本：
-
-```bash
-# Ubuntu/Debian
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-
-# CentOS/RHEL
-sudo yum install postgresql-server postgresql-contrib
-sudo postgresql-setup --initdb
-
-# macOS (使用Homebrew)
-brew install postgresql
-```
-
-### 2. 创建数据库
-
-```bash
-# 登录PostgreSQL
-sudo -u postgres psql
-
-# 创建数据库和用户
-CREATE DATABASE license_management;
-CREATE USER license_app WITH ENCRYPTED PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE license_management TO license_app;
-
-# 连接到新数据库
-\c license_management
-```
-
-### 3. 安装必要扩展
-
-```sql
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-
--- 可选：安装pgvector (需要先编译安装)
--- CREATE EXTENSION IF NOT EXISTS vector;
-```
-
-### 4. 创建数据库架构
-
-```bash
-# 应用上下文架构
-psql -U license_app -d license_management -f context_schema.sql
-
-# 应用主应用程序架构
-psql -U license_app -d license_management -f postgres_schema.sql
-```
-
-## 上下文服务器配置
-
-### 基本配置
-
-在`postgres_context_server.conf`中设置以下参数：
-
-```
-# 内存设置
-shared_buffers = 2GB
-effective_cache_size = 6GB
-work_mem = 32MB
-maintenance_work_mem = 512MB
-
-# 写入设置
-wal_buffers = 16MB
-checkpoint_completion_target = 0.9
-
-# 搜索优化
-default_statistics_target = 100
-random_page_cost = 1.1
-effective_io_concurrency = 200
-```
-
-### 安全配置
-
-在`pg_hba.conf`中设置适当的访问控制：
-
-```
-# 仅允许特定IP访问
-host    license_management    license_app    10.0.0.0/24    md5
-
-# 或者使用SSL
-hostssl license_management    license_app    all            cert
-```
-
-## 加载项目上下文
-
-使用提供的脚本加载项目上下文：
-
-```bash
-# 切换到项目目录
-cd license-management
-
-# 编译并运行上下文加载脚本
-npx ts-node src/scripts/load-project-summary.ts
-```
-
-## 客户端集成
-
-### TypeScript/Node.js 集成
-
-1. 安装依赖
-
-```bash
-npm install pg pg-promise dotenv
-```
-
-2. 使用提供的客户端库
-
-```typescript
-import { contextClient } from './lib/postgres-context-client';
-
-// 在应用程序中使用
-async function useContext() {
-  const projectContext = await contextClient.retrieveContexts('project_summary');
-  console.log(projectContext);
-}
-```
-
-## 监控与维护
-
-### 备份上下文数据
-
-```bash
-# 定期备份
-pg_dump -U license_app -d license_management -t contexts -t context_* > context_backup.sql
-```
-
-### 性能监控
-
-```sql
--- 监控查询性能
-SELECT query, calls, total_exec_time
-FROM pg_stat_statements
-ORDER BY total_exec_time DESC
-LIMIT 10;
-```
-
-## 故障排除
-
-### 常见问题
-
-1. **连接失败**：检查PostgreSQL服务是否正在运行，以及网络/防火墙设置。
-2. **权限错误**：确保用户有适当的数据库权限。
-3. **扩展安装失败**：确保已安装`postgresql-contrib`包。
-
-## 更多资源
-
-- [PostgreSQL官方文档](https://www.postgresql.org/docs/)
-- [pgvector文档](https://github.com/pgvector/pgvector)
-- [PostgreSQL MCP扩展指南](database/mcp_extensions_guide.md)
-
-## 环境变量参考
-
-将以下环境变量添加到`.env`文件中：
-
-```
-# 数据库连接
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=license_management
-DB_USER=license_app
-DB_PASSWORD=your_secure_password
-
-# 加密设置
-ENCRYPTION_KEY=your_secure_encryption_key
-
-# MCP扩展配置
-MCP_VECTOR_ENABLED=true
-MCP_MAX_CONNECTIONS=20
-```
+1. 用户提交申请后，在licenses表中创建记录，status为'pending'
+2. 管理员通过查询pending_license_reviews视图查看所有待审核申请
+3. 管理员审核后，更新licenses表中的status字段：
+   - 'approved'（批准）：生成license_key并设置expiry_date
+   - 'rejected'（拒绝）：记录拒绝原因

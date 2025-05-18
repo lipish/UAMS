@@ -24,7 +24,11 @@ const authMiddleware = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-jwt-secret-key');
     
     // 将用户信息添加到请求对象
-    req.user = decoded;
+    req.user = {
+      id: decoded.id,
+      email: decoded.email,
+      company_name: decoded.company_name
+    };
     
     // 继续处理请求
     next();
@@ -55,20 +59,12 @@ const authMiddleware = (req, res, next) => {
 /**
  * 管理员权限验证中间件
  * 检查用户是否具有管理员权限
+ * 注意：当前版本未实现管理员角色，保留此中间件以供将来使用
  */
 const adminRequired = (req, res, next) => {
-  // 先验证用户身份
-  authMiddleware(req, res, () => {
-    // 检查用户角色
-    if (req.user && req.user.role === 'admin') {
-      next(); // 用户具有管理员权限，继续处理请求
-    } else {
-      // 用户不具有管理员权限
-      res.status(403).json({
-        status: 'error',
-        message: '权限不足，需要管理员权限'
-      });
-    }
+  return res.status(403).json({
+    status: 'error',
+    message: '此功能当前不可用'
   });
 };
 

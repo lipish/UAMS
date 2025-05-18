@@ -1,65 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/database';
-import { cookies } from 'next/headers';
 
+// 代理转发到后端API
 export async function POST(request: NextRequest) {
   try {
     // 获取请求体
     const body = await request.json();
-    const { email, password } = body;
-    
-    // 参数验证
-    if (!email || !password) {
-      return NextResponse.json(
-        { success: false, message: '邮箱和密码不能为空' },
-        { status: 400 }
-      );
-    }
-    
-    // 调用数据库登录函数
-    const result = await auth.loginUser(email, password);
-    
-    if (!result.success) {
-      return NextResponse.json(
-        { success: false, message: result.message || '邮箱或密码不正确' },
-        { status: 401 }
-      );
-    }
-    
-    // 登录成功，设置cookie
-    const { user } = result;
-    const cookieStore = cookies();
-    
-    // 设置用户会话cookie（实际应用中应使用更安全的JWT或会话机制）
-    cookieStore.set('user_id', String(user.id), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 7, // 一周
-      path: '/',
-    });
-    
-    cookieStore.set('user_role', user.role, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 7, // 一周
-      path: '/',
-    });
-    
-    // 返回成功响应（不包含敏感信息）
-    return NextResponse.json({
-      success: true,
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
+
+    // 转发到后端API
+    const response = await fetch('http://localhost:3001/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify(body),
     });
+
+    // 获取响应数据
+    const data = await response.json();
     
-  } catch (error) {
-    console.error('登录错误:', error);
+    // 确保用户数据包含角色信息
+    if (data && data.status === 'success' && data.data && data.data.user) {
+      // 如果后端没有提供角色，添加默认角色
+      if (!data.data.user.role) {
+        data.data.user.role = 'user';
+      }
+      console.log('代理登录成功，用户信息:', data.data.user);
+    }
+
+    // 返回后端的响应
+    return NextResponse.json(data, {
+      status: response.status,
+    });
+  } catch (error: any) {
+    console.error('登录代理错误:', error);
+    
+    // 返回错误响应
     return NextResponse.json(
-      { success: false, message: '服务器错误，请稍后再试' },
+      { 
+        status: 'error',
+        message: error.message || '登录请求处理失败' 
+      },
       { status: 500 }
     );
   }

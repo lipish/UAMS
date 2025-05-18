@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 class User {
   /**
    * 创建新用户
-   * @param {Object} userData 用户数据对象
+   * @param {Object} userData 用户数据
    * @returns {Promise<Object>} 创建的用户对象（不含密码）
    */
   static async create(userData) {
@@ -20,9 +20,7 @@ class User {
     );
     
     if (emailCheck.rows[0].email_exists) {
-      const error = new Error('该邮箱已被注册');
-      error.statusCode = 409;
-      throw error;
+      return { error: '该邮箱已被注册', statusCode: 409 };
     }
     
     // 检查用户名是否已存在
@@ -33,31 +31,29 @@ class User {
       );
       
       if (usernameCheck.rows[0].username_exists) {
-        const error = new Error('该用户名已被使用');
-        error.statusCode = 409;
-        throw error;
+        return { error: '该用户名已被使用', statusCode: 409 };
       }
     }
     
     // 密码加密
     const saltRounds = 10;
-    const password_hash = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     
     // 插入新用户
     const result = await query(
-      `INSERT INTO users(username, password_hash, email, company_name, contact_name, phone) 
+      `INSERT INTO users(username, password, email, company_name, contact_name, phone) 
        VALUES($1, $2, $3, $4, $5, $6) 
        RETURNING id, username, email, company_name, contact_name, phone, created_at`,
-      [username || email, password_hash, email, company_name, contact_name, phone || null]
+      [username, hashedPassword, email, company_name, contact_name, phone || null]
     );
     
     return result.rows[0];
   }
   
   /**
-   * 通过邮箱查找用户（包含密码哈希）
+   * 通过邮箱查找用户（用于登录）
    * @param {string} email 用户邮箱
-   * @returns {Promise<Object|null>} 用户对象或null
+   * @returns {Promise<Object|null>} 用户对象（包含密码）或null
    */
   static async findByEmail(email) {
     const result = await query(
@@ -65,29 +61,22 @@ class User {
         id, 
         username, 
         email, 
-        password_hash, 
+        password,
         company_name, 
         contact_name, 
         phone, 
-        is_active, 
-        created_at, 
-        updated_at 
+        is_active,
+        created_at,
+        updated_at
       FROM users WHERE email = $1`,
       [email]
     );
     
-    if (result.rows[0]) {
-      const user = result.rows[0];
-      // 将 password_hash 映射回 password 以保持接口一致
-      user.password = user.password_hash;
-      delete user.password_hash;
-      return user;
-    }
-    return null;
+    return result.rows[0] || null;
   }
   
   /**
-   * 通过ID查找用户（不含密码）
+   * 通过ID查找用户
    * @param {number} id 用户ID
    * @returns {Promise<Object|null>} 用户对象或null
    */
@@ -100,9 +89,7 @@ class User {
         company_name, 
         contact_name, 
         phone, 
-        is_active, 
-        created_at, 
-        updated_at 
+        created_at 
       FROM users WHERE id = $1`,
       [id]
     );
@@ -163,36 +150,35 @@ class User {
    * @returns {Promise<boolean>} 是否更新成功
    */
   static async updatePassword(id, currentPassword, newPassword) {
-    // 获取当前用户信息（包含密码哈希）
+    // 查询用户（包含密码）
     const result = await query(
-      'SELECT password_hash FROM users WHERE id = $1',
+      'SELECT id, password FROM users WHERE id = $1',
       [id]
     );
     
-    if (result.rows.length === 0) {
+    const user = result.rows[0];
+    if (!user) {
       const error = new Error('用户不存在');
       error.statusCode = 404;
       throw error;
     }
     
-    const user = result.rows[0];
-    
     // 验证当前密码
-    const passwordMatch = await bcrypt.compare(currentPassword, user.password_hash);
-    
-    if (!passwordMatch) {
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
       const error = new Error('当前密码不正确');
-      error.statusCode = 401;
+      error.statusCode = 400;
       throw error;
     }
     
     // 加密新密码
     const saltRounds = 10;
-    const password_hash = await bcrypt.hash(newPassword, saltRounds);
+    const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
     
+    // 更新密码
     await query(
-      'UPDATE users SET password_hash = $1 WHERE id = $2',
-      [password_hash, id]
+      'UPDATE users SET password = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
+      [newPasswordHash, id]
     );
     
     return true;
@@ -206,7 +192,7 @@ class User {
    */
   static async findAll(limit = 100, offset = 0) {
     const result = await query(
-      `SELECT id, username, email, full_name, phone, role, created_at 
+      `SELECT id, username, email, company_name, contact_name, phone, created_at, updated_at 
        FROM users 
        ORDER BY created_at DESC 
        LIMIT $1 OFFSET $2`,
@@ -231,26 +217,18 @@ class User {
   }
   
   /**
-   * 设置用户角色（仅管理员可用）
+   * 设置用户角色（保留方法但标记为弃用）
+   * 当前版本不实现角色功能，保留此方法以保持向后兼容
+   * @deprecated 当前版本不实现角色功能
    * @param {number} id 用户ID
    * @param {string} role 角色名称
-   * @returns {Promise<Object>} 更新后的用户对象
+   * @returns {Promise<Object>} 用户对象
    */
   static async setRole(id, role) {
-    // 验证角色有效性
-    const validRoles = ['user', 'admin'];
-    if (!validRoles.includes(role)) {
-      const error = new Error('无效的角色名称');
-      error.statusCode = 400;
-      throw error;
-    }
-    
+    // 获取用户信息但不更新角色
     const result = await query(
-      `UPDATE users 
-       SET role = $1 
-       WHERE id = $2 
-       RETURNING id, username, email, full_name, phone, role, created_at`,
-      [role, id]
+      'SELECT id, username, email, company_name, contact_name, phone, created_at, updated_at FROM users WHERE id = $1',
+      [id]
     );
     
     if (result.rows.length === 0) {

@@ -59,3 +59,71 @@
 {"level":"info","message":"POST /api/auth/register","service":"license-api","timestamp":"2025-05-18 17:58:52"}
 {"level":"info","message":"GET /api/health","service":"license-api","timestamp":"2025-05-18 17:59:09"}
 {"level":"info","message":"POST /api/auth/register","service":"license-api","timestamp":"2025-05-18 17:59:09"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:15:12"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:15:12"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:15:12"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:15:28"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:15:28"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:15:28"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:16:13"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:16:13"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:16:13"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:17:06"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:17:06"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:17:06"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:48:07"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:48:07"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:48:07"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:49:30"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:49:30"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:49:30"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:53:02"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:53:02"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:53:02"}
+{"level":"info","message":"GET /api/health","service":"license-api","timestamp":"2025-05-18 19:56:04"}
+{"level":"info","message":"POST /api/auth/register","service":"license-api","timestamp":"2025-05-18 19:56:04"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:57:15"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:57:15"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:57:15"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 19:57:32"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 19:57:32"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 19:57:32"}
+{"level":"info","message":"GET /api/health","service":"license-api","timestamp":"2025-05-18 20:02:22"}
+{"level":"info","message":"POST /api/auth/register","service":"license-api","timestamp":"2025-05-18 20:02:22"}
+{"level":"info","message":"POST /auth/login","service":"license-api","timestamp":"2025-05-18 20:03:01"}
+{"address":"::","code":"EADDRINUSE","errno":-48,"level":"error","message":"未捕获的异常: listen EADDRINUSE: address already in use :::3001","port":3001,"service":"license-api","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1939:16)\n    at listenInCluster (node:net:1996:12)\n    at Server.listen (node:net:2101:7)\n    at Function.listen (/Users/mac-m4/github/license/license-management/backend/node_modules/express/lib/application.js:635:24)\n    at startServer (/Users/mac-m4/github/license/license-management/backend/src/index.js:65:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","syscall":"listen","timestamp":"2025-05-18 20:06:49"}
+{"level":"info","message":"GET /api/health","service":"license-api","timestamp":"2025-05-18 20:07:24"}
+{"level":"info","message":"POST /auth/login","service":"license-api","timestamp":"2025-05-18 20:07:34"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 20:34:39"}
+{"level":"info","message":"GET /api/auth/me","service":"license-api","timestamp":"2025-05-18 20:34:39"}
+{"level":"info","message":"GET /api/auth/me","service":"license-api","timestamp":"2025-05-18 20:37:35"}
+{"level":"info","message":"GET /api/auth/me","service":"license-api","timestamp":"2025-05-18 20:44:14"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 20:46:21"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 20:46:21"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 20:46:34"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 20:46:34"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 20:46:43"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 20:46:43"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 20:47:28"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 20:47:28"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 20:47:38"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 20:47:38"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 20:47:47"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 20:47:47"}
+{"level":"info","message":"GET /api/auth/me","service":"license-api","timestamp":"2025-05-18 21:05:23"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 21:08:46"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 21:08:46"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 21:09:43"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 21:09:43"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 21:13:51"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 21:13:51"}
+{"level":"info","message":"服务器运行在 http://localhost:3001","service":"license-api","timestamp":"2025-05-18 21:31:40"}
+{"level":"info","message":"环境: development","service":"license-api","timestamp":"2025-05-18 21:31:40"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 21:35:09"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 21:40:32"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 21:46:15"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 21:46:36"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 21:52:50"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 21:58:24"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 22:02:56"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-05-18 22:42:37"}

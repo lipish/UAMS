@@ -3,12 +3,14 @@
 -- Users Table (代理商用户)
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     company_name VARCHAR(255) NOT NULL,
     contact_name VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
     is_active BOOLEAN DEFAULT TRUE,
+    role VARCHAR(20) DEFAULT 'user',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -59,7 +61,12 @@ CREATE TABLE license_applications (
     quantity INTEGER NOT NULL DEFAULT 1,
     apply_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     expiry_date DATE NOT NULL,
-    status VARCHAR(50) NOT NULL DEFAULT '待审核', -- 待审核, 已批准, 已拒绝, 已过期
+    status VARCHAR(50) NOT NULL DEFAULT 'pending', -- pending, approved, rejected, expired
+    license_key VARCHAR(255),
+    mac_address VARCHAR(100),
+    reviewed_by INTEGER REFERENCES users(id),
+    review_date TIMESTAMP WITH TIME ZONE,
+    review_comments TEXT,
     notes TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -72,13 +79,23 @@ CREATE TABLE license_features (
     PRIMARY KEY (license_application_id, feature_id)
 );
 
--- Generated Licenses Table (生成的License表)
+-- Licenses Table (License表)
 CREATE TABLE licenses (
     id SERIAL PRIMARY KEY,
-    license_application_id INTEGER REFERENCES license_applications(id) ON DELETE SET NULL,
-    license_key VARCHAR(100) UNIQUE NOT NULL,
-    activation_date TIMESTAMP WITH TIME ZONE,
-    is_active BOOLEAN DEFAULT TRUE,
+    user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    applicant_name VARCHAR(255) NOT NULL,
+    applicant_email VARCHAR(255) NOT NULL,
+    applicant_phone VARCHAR(50),
+    company_name VARCHAR(255),
+    license_type VARCHAR(50) NOT NULL,
+    mac_address VARCHAR(100) NOT NULL,
+    application_reason TEXT,
+    status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    license_key VARCHAR(255),
+    reviewed_by INTEGER REFERENCES users(id),
+    review_date TIMESTAMP WITH TIME ZONE,
+    review_comments TEXT,
+    expiry_date TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -121,3 +138,8 @@ INSERT INTO license_type_features (license_type_id, feature_id) VALUES
 (2, 1), -- 标准版 - 基础功能
 (3, 1), (3, 2), -- 专业版 - 基础功能, 高级功能
 (4, 1), (4, 2), (4, 3); -- 企业版 - 所有功能
+
+-- 创建测试用户 (密码: test123)
+INSERT INTO users (username, email, password, company_name, contact_name, phone, role) VALUES
+('testuser', 'test@example.com', '$2b$10$3IXgAkEl.PWJVmUxj4aOZeS.4h0CycKryDaHsf1TecEbQYqY4flsG', '测试公司', '测试用户', '13800138000', 'user'),
+('admin', 'admin@example.com', '$2b$10$3IXgAkEl.PWJVmUxj4aOZeS.4h0CycKryDaHsf1TecEbQYqY4flsG', '管理公司', '管理员', '13900139000', 'admin');
