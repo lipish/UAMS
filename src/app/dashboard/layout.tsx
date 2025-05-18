@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
 export default function DashboardLayout({
   children,
@@ -7,7 +8,8 @@ export default function DashboardLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col">
+    <ProtectedRoute requiredRole="user">
+      <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-10 border-b bg-background">
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-6 md:gap-10">
@@ -42,5 +44,6 @@ export default function DashboardLayout({
         <div className="container py-6">{children}</div>
       </main>
     </div>
+    </ProtectedRoute>
   );
 }
