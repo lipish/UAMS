@@ -19,7 +19,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: 'License状态 - License管理系统',
+  title: 'License状态 - UAMS',
   description: '查看和管理License申请的状态',
 };
 

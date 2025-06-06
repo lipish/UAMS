@@ -143,7 +143,7 @@ class ApiService {
     }
   };
   
-  // License管理相关API
+  // UAMS License管理相关API
   licenses = {
     // 创建license申请
     create: (licenseData: any) => {

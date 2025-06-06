@@ -32,7 +32,7 @@ export const config = {
    * 应用设置
    */
   app: {
-    name: 'License管理系统',
+    name: 'UAMS',
     environment: process.env.NODE_ENV || 'development',
     port: parseInt(process.env.PORT || '3000', 10),
     apiPrefix: '/api',

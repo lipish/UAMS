@@ -1,6 +1,6 @@
-# License管理系统后端服务
+# UAMS 后端服务
 
-这是License管理系统的后端API服务，负责处理用户认证、License申请和管理等功能。
+这是UAMS (Unified Authorization Management System) 的后端API服务，负责处理用户认证、License申请和管理等功能。
 
 ## 技术栈
 
@@ -69,7 +69,7 @@ npm start
 - `PUT /api/auth/profile` - 更新用户资料
 - `PUT /api/auth/password` - 修改密码
 
-### License管理接口
+### UAMS License管理接口
 
 - `POST /api/licenses` - 创建license申请
 - `GET /api/licenses/my` - 获取当前用户的license申请

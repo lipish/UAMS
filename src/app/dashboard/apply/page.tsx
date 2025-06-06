@@ -21,7 +21,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: '申请License - License管理系统',
+  title: '申请License - UAMS',
   description: '填写表单以申请新的License',
 };
 

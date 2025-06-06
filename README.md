@@ -1,6 +1,6 @@
-# License管理系统
+# UAMS (Unified Authorization Management System)
 
-一个专业的软件授权管理平台，用于代理商申请License、管理员审核申请流程，以及生成和分发许可证密钥。
+一个专业的统一授权管理平台，用于代理商申请License、管理员审核申请流程，以及生成和分发许可证密钥。
 
 > [!NOTE]
 > 开发者相关文档请查看 [开发文档](docs/dev.md)，包含数据库结构和管理员账户信息。
@@ -63,8 +63,8 @@
 
 1. 克隆仓库
 ```bash
-git clone https://github.com/yourusername/license-management.git
-cd license-management
+git clone https://github.com/yourusername/uams.git
+cd uams
 ```
 
 2. 安装依赖

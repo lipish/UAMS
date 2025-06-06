@@ -5,8 +5,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
-  title: '控制台 - License管理系统',
-  description: 'License管理系统控制台',
+  title: '控制台 - UAMS',
+  description: 'UAMS 统一授权管理系统控制台',
 };
 
 export default function DashboardPage() {
@@ -16,7 +16,7 @@ export default function DashboardPage() {
   // 下面的代码不会执行，因为已经重定向
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-6">欢迎使用License管理系统</h1>
+      <h1 className="text-2xl font-bold mb-6">欢迎使用UAMS统一授权管理系统</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>

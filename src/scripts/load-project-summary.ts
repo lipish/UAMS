@@ -21,7 +21,7 @@ async function loadProjectSummary() {
     // 存储到上下文数据库
     console.log('存储项目总结到PostgreSQL上下文服务器...');
     const contextId = await contextClient.storeProjectSummary(
-      'License管理系统总结',
+      'UAMS统一授权管理系统总结',
       summary.content,
       {
         version: getProjectVersion(),

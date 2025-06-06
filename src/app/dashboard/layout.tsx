@@ -49,7 +49,7 @@ export default function DashboardLayout({
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-6 md:gap-10">
             <Link href="/dashboard" className="flex items-center space-x-2">
-              <span className="font-bold">License管理系统</span>
+              <span className="font-bold">UAMS</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
               <Link

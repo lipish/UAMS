@@ -1,5 +1,5 @@
 {
-  "name": "license-management-backend",
+  "name": "uams-backend",
   "version": "1.0.0",
   "description": "Backend service for license management system",
   "main": "src/index.js",
@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/license-management.git"
+    "url": "git+https://github.com/yourusername/uams.git"
   },
   "keywords": [
     "license",

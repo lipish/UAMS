@@ -22,7 +22,7 @@ interface LicenseContextProviderProps {
 }
 
 /**
- * 为应用程序提供License管理系统上下文数据
+ * 为应用程序提供UAMS统一授权管理系统上下文数据
  */
 export const LicenseContextProvider: React.FC<LicenseContextProviderProps> = ({ 
   children, 
