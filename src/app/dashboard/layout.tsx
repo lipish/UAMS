@@ -53,6 +53,7 @@ export default function DashboardLayout({
         <div className="container mx-auto max-w-7xl flex h-16 items-center justify-between px-4 py-4">
           <div className="flex items-center gap-6 md:gap-10">
             <Link href="/dashboard" className="flex items-center space-x-2">
+              <img src="/xinference.svg" alt="Xinference" className="h-6 w-6" />
               <span className="font-bold">UAMS</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
@@ -77,6 +78,12 @@ export default function DashboardLayout({
                       className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
                     >
                       申请License
+                    </Link>
+                    <Link
+                      href="/dashboard/my-applications"
+                      className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
+                    >
+                      我的申请
                     </Link>
                     <Link
                       href="/dashboard/cancel"
