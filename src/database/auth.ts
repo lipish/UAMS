@@ -9,16 +9,18 @@ const SALT_ROUNDS = 10;
  * @param username 用户名
  * @param password 密码
  * @param email 邮箱
- * @param fullName 姓名
+ * @param contactName 联系人姓名
  * @param phone 手机号
+ * @param companyName 公司名称
  * @returns 注册结果
  */
 export async function registerUser(
   username: string, 
   password: string, 
   email: string, 
-  fullName?: string, 
-  phone?: string
+  contactName?: string, 
+  phone?: string,
+  companyName?: string
 ) {
   try {
     // 检查邮箱是否已存在
@@ -46,8 +48,8 @@ export async function registerUser(
     
     // 注册新用户
     const result = await query(
-      'INSERT INTO users(username, password, email, full_name, phone) VALUES($1, $2, $3, $4, $5) RETURNING id',
-      [username, hashedPassword, email, fullName || null, phone || null]
+      'INSERT INTO users(username, password, email, contact_name, phone, company_name) VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
+      [username, hashedPassword, email, contactName || null, phone || null, companyName || null]
     );
     
     return { 

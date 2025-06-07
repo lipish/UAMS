@@ -48,6 +48,9 @@ export default function ProtectedRoute({
       if (token && userStr && !isAuthenticated && !loading) {
         console.log('ProtectedRoute: 存储中有认证信息，允许访问');
         setLocalAuthenticated(true);
+      } else if (isAuthenticated) {
+        // 如果已认证，清除本地认证状态
+        setLocalAuthenticated(false);
       }
       
       setLocalChecked(true);

@@ -81,12 +81,10 @@ export function useAuthCheck(options: UseAuthCheckOptions = {}) {
         userData: user ? JSON.parse(user) : null
       });
       
-      // 如果有token但用户状态未更新，尝试刷新页面
+      // 如果有token但用户状态未更新，触发认证状态更新而不是刷新页面
       if (token && user && !isAuthenticated) {
-        console.log('检测到存储中的认证信息，但状态未更新，尝试刷新页面');
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
+        console.log('检测到存储中的认证信息，但状态未更新，触发认证更新');
+        window.dispatchEvent(new Event('auth-update'));
       }
     }
   }, [localChecked, isAuthenticated]);
@@ -123,11 +121,9 @@ export function useAuthCheck(options: UseAuthCheckOptions = {}) {
       }
       
       if (hasToken) {
-        console.log('有token但认证状态不完整，尝试刷新页面');
-        // 如果有token但认证不完整，可能是状态未同步，尝试刷新
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
+        console.log('有token但认证状态不完整，触发认证更新');
+        // 如果有token但认证不完整，可能是状态未同步，触发认证更新
+        window.dispatchEvent(new Event('auth-update'));
         return;
       }
     }

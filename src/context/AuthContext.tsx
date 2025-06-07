@@ -178,11 +178,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     // 定期检查认证状态，防止过期
     const intervalId = setInterval(() => {
-      if (user) {
-        console.log('AuthContext: 定期检查认证状态');
-        checkAuth();
+      if (user && typeof window !== 'undefined') {
+        const token = localStorage.getItem('token');
+        if (token) {
+          console.log('AuthContext: 定期检查认证状态');
+          checkAuth();
+        }
       }
-    }, 60000); // 每分钟检查一次
+    }, 300000); // 每5分钟检查一次，减少频率
     
     return () => {
       window.removeEventListener('storage', handleStorageChange);
