@@ -189,7 +189,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       window.removeEventListener('auth-update', handleCustomEvent);
       clearInterval(intervalId);
     };
-  }, [checkAuth, user]);
+  }, [checkAuth]);
 
   // 登录方法
   const login = useCallback(async (email: string, password: string, skipRequest = false) => {
@@ -224,7 +224,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       sessionStorage.removeItem('user');
       
       console.log('AuthContext: 开始登录请求...');
-      const response = await fetch('http://localhost:3001/api/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -280,7 +280,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } finally {
       setLoading(false);
     }
-  }, [checkAuth, user]);
+  }, [checkAuth]);
 
   // 注销
   const logout = useCallback(() => {
@@ -441,44 +441,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, []);
 
-  // 检查是否有token但user为null的情况（可能是刚刚加载但还未获取用户信息）
-  // 直接从存储中获取认证信息
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-  const cachedUserStr = typeof window !== 'undefined' ? sessionStorage.getItem('user') : null;
-  let cachedUser = null;
-  
-  try {
-    if (cachedUserStr) {
-      cachedUser = JSON.parse(cachedUserStr);
-      console.log('AuthContext: 从sessionStorage读取到用户:', cachedUser);
-    }
-  } catch (e) {
-    console.error('AuthContext: 解析缓存用户数据失败:', e);
-    // 清除无效的缓存
-    sessionStorage.removeItem('user');
-  }
-  
   // 计算认证状态
-  const isAuthenticated = !!user || (!!token && !!cachedUser);
-  
-  // 如果有存储数据但没有用户对象，立即更新用户状态
-  useEffect(() => {
-    if (!user && cachedUser && token && typeof window !== 'undefined') {
-      console.log('AuthContext: 存在缓存用户但状态未更新，立即设置用户状态', cachedUser);
-      setUser(cachedUser);
-      
-      // 触发存储事件，通知其他组件
-      try {
-        window.dispatchEvent(new StorageEvent('storage', {
-          key: 'user',
-          newValue: cachedUserStr,
-          url: window.location.href
-        }));
-      } catch (e) {
-        console.warn('AuthContext: 触发storage事件失败', e);
-      }
-    }
-  }, [user, cachedUser, token, cachedUserStr]);
+  const isAuthenticated = !!user;
   
   // 提供上下文值
   const contextValue: AuthContextType = {

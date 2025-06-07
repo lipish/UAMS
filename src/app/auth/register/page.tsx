@@ -57,30 +57,11 @@ export default function RegisterPage() {
       password: '',
       confirmPassword: ''
     },
-    mode: "all", // 实时验证所有字段
+    mode: "onBlur", // 失焦时验证，避免无限循环
   });
 
-  // 监听表单状态
-  useEffect(() => {
-    const subscription = form.watch((value, { name }) => {
-      // 当密码或确认密码变化时，验证它们是否匹配
-      if (name === 'password' || name === 'confirmPassword') {
-        const password = form.getValues('password');
-        const confirmPassword = form.getValues('confirmPassword');
-        
-        if (confirmPassword && password !== confirmPassword) {
-          form.setError('confirmPassword', {
-            type: 'manual',
-            message: '两次输入的密码不一致'
-          });
-        } else if (confirmPassword) {
-          form.clearErrors('confirmPassword');
-        }
-      }
-    });
-    
-    return () => subscription.unsubscribe();
-  }, [form]);
+  // 移除手动密码验证的useEffect，因为zod schema中已经有refine验证
+  // 这样可以避免无限循环问题
 
   // 提交表单
   async function onSubmit(data: RegisterFormValues) {

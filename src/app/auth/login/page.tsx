@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAuth } from '@/context/AuthContext';
 
 import {
   Form,
@@ -33,6 +34,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   // 初始化表单
@@ -49,21 +51,11 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      // 连接后端API
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      });
+      const result = await login(data.email, data.password);
       
-      const result = await response.json();
-      
-      if (response.ok) {
+      if (result.success) {
         toast.success('登录成功！');
-        setTimeout(() => router.push('/dashboard'), 1000);
+        router.push('/dashboard');
       } else {
         toast.error(result.message || '邮箱或密码不正确');
       }
