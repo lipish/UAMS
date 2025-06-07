@@ -77,18 +77,18 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <span className="text-green-600">📊</span>
-                License 状态
+                License 管理
               </CardTitle>
               <CardDescription>
-                查看所有License申请状态
+                管理您的软件授权许可
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">实时查看License申请的审批进度和状态。</p>
+              <p className="text-sm text-muted-foreground">查看、搜索和管理所有License，包括状态跟踪和操作。</p>
             </CardContent>
             <CardFooter>
-              <Link href="/dashboard/status" passHref>
-                <Button variant="outline" className="w-full">查看状态</Button>
+              <Link href="/dashboard/license" passHref>
+                <Button variant="outline" className="w-full">进入管理</Button>
               </Link>
             </CardFooter>
           </Card>
