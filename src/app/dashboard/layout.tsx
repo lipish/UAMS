@@ -80,12 +80,6 @@ export default function DashboardLayout({
                       申请License
                     </Link>
                     <Link
-                      href="/dashboard/my-applications"
-                      className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
-                    >
-                      我的申请
-                    </Link>
-                    <Link
                       href="/dashboard/cancel"
                       className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
                     >
