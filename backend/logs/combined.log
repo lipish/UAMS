@@ -249,3 +249,11 @@
 {"level":"info","message":"GET /api/licenses/my","service":"license-api","timestamp":"2025-06-08 20:47:32"}
 {"level":"info","message":"GET /api/licenses/my","service":"license-api","timestamp":"2025-06-08 20:47:52"}
 {"level":"info","message":"GET /api/licenses/my","service":"license-api","timestamp":"2025-06-08 20:47:52"}
+{"level":"info","message":"GET /?ide_webview_request_time=1749386874173","service":"license-api","timestamp":"2025-06-08 20:47:54"}
+{"level":"info","message":"GET /api/licenses/my","service":"license-api","timestamp":"2025-06-10 08:17:43"}
+{"level":"info","message":"GET /api/licenses/my","service":"license-api","timestamp":"2025-06-10 08:17:43"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-06-10 08:18:24"}
+{"level":"info","message":"GET /api/auth/me","service":"license-api","timestamp":"2025-06-10 08:37:55"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-06-11 18:53:50"}
+{"level":"info","message":"POST /api/auth/login","service":"license-api","timestamp":"2025-06-11 18:55:58"}
+{"level":"info","message":"GET /api/auth/me","service":"license-api","timestamp":"2025-06-11 19:00:44"}

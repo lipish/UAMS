@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import Image from 'next/image';
 import { toast } from '@/components/ui/use-toast';
 import { apiService } from '@/lib/api-client';
 import { ErrorDisplay } from '@/components/ui/error-display';
@@ -170,7 +171,12 @@ export function LoginForm() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <Card className="w-full max-w-md">
-        <CardHeader>
+        <CardHeader className="text-center">
+          <div className="flex justify-center mb-4">
+            <Image src="/xinference.svg" alt="UAMS Logo" width={80} height={80} />
+          </div>
+          <p className="text-lg font-semibold mb-1">欢迎使用UAMS统一授权管理系统</p>
+          <p className="text-sm text-muted-foreground mb-4">Unified Authorization Management System</p>
           <CardTitle className="text-2xl text-center">登录</CardTitle>
           <CardDescription className="text-center">输入您的账号信息登录系统</CardDescription>
         </CardHeader>

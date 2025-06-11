@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import Image from 'next/image';
 import { toast } from '@/components/ui/use-toast';
 
 export function RegisterForm() {
@@ -209,35 +210,35 @@ export function RegisterForm() {
         throw new Error(errorMessage);
       }
       
-      console.log('注册成功，响应数据:', responseData);
-      
-      toast({
-        title: '注册成功',
-        description: '账号注册成功，请登录',
-      });
-      
-      // 注册成功后跳转到登录页面
-      router.push('/login');
+      // 注册成功后的处理逻辑
+      const { token, user } = responseData.data; 
+
+      if (token && user) {
+        localStorage.setItem('token', token);
+        // sessionStorage.setItem('user', JSON.stringify(user)); // AuthContext 会处理
+        // 手动触发 AuthContext 更新
+        window.dispatchEvent(new CustomEvent('auth-update'));
+
+        toast({
+          title: '注册成功',
+          description: '您已成功注册并自动登录。',
+        });
+        router.push('/dashboard'); // 跳转到 dashboard 页面
+      } else {
+        // 如果后端没有按预期返回 token 或用户信息
+        console.error('注册成功，但未收到 token 或用户信息:', responseData);
+        toast({
+          title: '注册成功',
+          description: '注册成功，但自动登录失败，请手动登录。',
+          variant: 'default',
+        });
+        router.push('/login');
+      }
     } catch (error: any) {
-      console.error('注册失败 - 完整错误对象:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-        ...(error.response ? {
-          response: {
-            status: error.response.status,
-            statusText: error.response.statusText,
-            headers: error.response.headers,
-            data: error.response.data
-          }
-        } : {})
-      });
-      
-      // 显示错误信息
-      const errorMessage = error.message || '注册失败，请稍后重试';
+      console.error('注册失败:', error);
       toast({
         title: '注册失败',
-        description: errorMessage,
+        description: error.message || '发生未知错误，请稍后再试。',
         variant: 'destructive',
       });
     } finally {
@@ -248,9 +249,14 @@ export function RegisterForm() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">注册</CardTitle>
-          <CardDescription className="text-center">创建您的代理商账号</CardDescription>
+        <CardHeader className="text-center">
+          <div className="flex justify-center mb-4">
+            <Image src="/xinference.svg" alt="UAMS Logo" width={80} height={80} />
+          </div>
+          <p className="text-lg font-semibold mb-1">欢迎使用UAMS统一授权管理系统</p>
+          <p className="text-sm text-muted-foreground mb-4">Unified Authorization Management System</p>
+          <CardTitle className="text-2xl text-center">创建账户</CardTitle>
+          <CardDescription className="text-center">输入您的信息以创建新账户</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
