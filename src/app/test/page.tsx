@@ -104,7 +104,7 @@ export default function TestPage() {
 
         <div className="text-center mt-4">
           <p className="text-sm text-gray-500">
-            <a href="/auth/register" className="text-blue-600 hover:underline">返回注册页面</a>
+            <a href="/register" className="text-blue-600 hover:underline">返回注册页面</a>
           </p>
         </div>
       </div>

@@ -17,7 +17,7 @@ interface UseAuthCheckOptions {
  */
 export function useAuthCheck(options: UseAuthCheckOptions = {}) {
   const { 
-    redirectTo = '/auth/login', 
+    redirectTo = '/login', 
     requiredRole, 
     redirectIfFound = false 
   } = options;
@@ -106,7 +106,7 @@ export function useAuthCheck(options: UseAuthCheckOptions = {}) {
     }
 
     // 在登录或注册页面不需要检查
-    if (pathname === '/auth/login' || pathname === '/auth/register') {
+    if (pathname === '/login' || pathname === '/register') {
       // 如果已经认证，重定向到首页
       if (effectiveAuthenticated) {
         router.push('/dashboard/apply');
@@ -137,7 +137,7 @@ export function useAuthCheck(options: UseAuthCheckOptions = {}) {
     // 如果未认证且需要认证，则重定向
     if (!redirectIfFound && !effectiveAuthenticated) {
       // 保存当前路径以便登录后返回
-      if (pathname !== '/auth/login' && pathname !== '/auth/register') {
+      if (pathname !== '/login' && pathname !== '/register') {
         sessionStorage.setItem('returnUrl', pathname);
       }
       router.push(redirectTo);

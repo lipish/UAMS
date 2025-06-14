@@ -78,7 +78,7 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem('token');
       
       // 可以在这里添加重定向到登录页面的逻辑
-      window.location.href = '/auth/login';
+      window.location.href = '/login';
       
       return Promise.reject(error);
     }
@@ -94,13 +94,13 @@ class ApiService {
   auth = {
     // 用户注册
     register: (userData: any) => {
-      return axiosInstance.post('/auth/register', userData);
+      return axiosInstance.post('/api/auth/register', userData);
     },
     
     // 用户登录
     login: async (email: string, password: string) => {
       try {
-        const response = await axiosInstance.post('/auth/login', { email, password });
+        const response = await axiosInstance.post('/api/auth/login', { email, password });
         
         // 保存token到localStorage
         if (response.data?.data?.token) {

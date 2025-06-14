@@ -20,7 +20,7 @@ interface AuthContextType {
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string, skipRequest?: boolean) => Promise<{ success: boolean; user: User | null }>;
+  login: (email: string, password: string, skipRequest?: boolean) => Promise<{ success: boolean; user: User | null; error?: string }>;
   logout: () => void;
   register: (userData: any) => Promise<{ success: boolean; user: User | null }>;
   updateProfile: (profileData: any) => Promise<any>;
@@ -236,8 +236,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `登录请求失败 (${response.status})`);
+        let errorMessage = `登录请求失败 (${response.status})`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          // 如果后端返回的不是 JSON，或者 JSON 解析失败，使用默认的错误信息
+          console.error('AuthContext: 解析错误响应失败', e);
+        }
+        setError(errorMessage);
+        return { success: false, user: null, error: errorMessage };
       }
 
       const data = await response.json();
@@ -278,8 +286,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.removeItem('token');
       sessionStorage.removeItem('user');
       setUser(null);
-      setError(err.message || '登录失败');
-      throw err;
+      const errorMessage = err.message || '登录失败';
+      setError(errorMessage);
+      return { success: false, user: null, error: errorMessage };
     } finally {
       setLoading(false);
     }
@@ -306,7 +315,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
     
     // 确保重定向到正确的登录页面路径
-    router.push('/auth/login');
+    router.push('/login');
   }, [router]);
 
   // 注册方法
